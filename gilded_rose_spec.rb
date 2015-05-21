@@ -18,6 +18,17 @@ describe GildedRose do
       it "decreases item quality" do
         expect(@items[0].quality).to eq(19)
       end
+
+      context "when sell by date has passed" do
+        it "quality decreases twice as fast" do
+          items = [Item.new(a_name, 0, 20)]
+
+          GildedRose.new(items).update_quality()
+
+          expect(items[0].quality).to eq(18)
+        end
+      end
+
     end
   end
 end
