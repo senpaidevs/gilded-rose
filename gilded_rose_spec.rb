@@ -1,14 +1,17 @@
 require File.join(File.dirname(__FILE__), 'gilded_rose')
 
 describe GildedRose do
+  let(:a_name) { 'irrelevant name' }
 
-  describe "#update_quality" do
-    it "does not change the name" do
-      items = [Item.new("foo", 0, 0)]
+  context "when updating quality" do
+    context "when updating normal items" do
+      it "decreases sell in" do
+        items = [Item.new(a_name, 10, 20)]
 
-      GildedRose.new(items).update_quality()
+        GildedRose.new(items).update_quality()
 
-      expect(items[0].name).to eq("fixme")
+        expect(items[0].sell_in).to eq(9)
+      end
     end
   end
 
