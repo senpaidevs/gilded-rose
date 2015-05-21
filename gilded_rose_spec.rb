@@ -63,12 +63,53 @@ describe GildedRose do
         end
 
         it "never modifies its quality" do
-           expect(@items[0].quality).to eq(20)
+          expect(@items[0].quality).to eq(20)
         end
 
         it "never modifies its sell in" do
           expect(@items[0].sell_in).to eq(10)
         end
+      end
+
+      context "when a Backstage pass is updated" do
+        it "its quality is incremented" do
+          items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 15, 20)]
+
+          GildedRose.new(items).update_quality
+
+          expect(items[0].quality).to eq(21)
+        end
+
+        context "when concert is 10 days left or less" do
+          it "its quality is incremented by 2" do
+            items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 9, 20)]
+
+            GildedRose.new(items).update_quality
+
+            expect(items[0].quality).to eq(22)
+          end
+        end
+
+        context "when concert is 5 days left or less" do
+          it "its quality is incremented by 3" do
+            items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 4, 20)]
+
+            GildedRose.new(items).update_quality
+
+            expect(items[0].quality).to eq(23)
+          end
+        end
+        context "when concert date is passed" do
+          it "its quality is set to zero" do
+            items = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 20)]
+
+            GildedRose.new(items).update_quality
+
+            expect(items[0].quality).to eq(0)
+          end
+        end
+
+
       end
     end
   end
