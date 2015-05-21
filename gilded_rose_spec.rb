@@ -8,13 +8,13 @@ describe GildedRose do
       before(:each) do
         @items = [Item.new(a_name, 10, 20)]
 
-        GildedRose.new(@items).update_quality()
+        GildedRose.new(@items).update_quality
       end
 
       it "doesn't have a negative quality value" do
         items = [Item.new(a_name, 10, 0)]
 
-        GildedRose.new(items).update_quality()
+        GildedRose.new(items).update_quality
 
         expect(items[0].quality).to be >= 0
       end
@@ -30,7 +30,7 @@ describe GildedRose do
       it "never its quality is more than 50" do
         items = [Item.new(a_name, 10, 60)]
 
-        GildedRose.new(items).update_quality()
+        GildedRose.new(items).update_quality
 
         expect(@items[0].quality).to be <= 50
       end
@@ -39,7 +39,7 @@ describe GildedRose do
         it "quality decreases twice as fast" do
           items = [Item.new(a_name, 0, 20)]
 
-          GildedRose.new(items).update_quality()
+          GildedRose.new(items).update_quality
 
           expect(items[0].quality).to eq(18)
         end
@@ -50,9 +50,24 @@ describe GildedRose do
         it "increases its quality" do
           items = [Item.new("Aged Brie", 10, 20)]
 
-          GildedRose.new(items).update_quality()
+          GildedRose.new(items).update_quality
 
           expect(items[0].quality).to eq(21)
+        end
+      end
+      context "when Sulfuras is updated" do
+        before(:each) do
+          @items = [Item.new("Sulfuras, Hand of Ragnaros",10,20)]
+
+          GildedRose.new(@items).update_quality
+        end
+
+        it "never modifies its quality" do
+           expect(@items[0].quality).to eq(20)
+        end
+
+        it "never modifies its sell in" do
+          expect(@items[0].sell_in).to eq(10)
         end
       end
     end
