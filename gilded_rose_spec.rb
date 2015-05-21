@@ -27,6 +27,14 @@ describe GildedRose do
         expect(@items[0].quality).to eq(19)
       end
 
+      it "never its quality is more than 50" do
+        items = [Item.new(a_name, 10, 60)]
+
+        GildedRose.new(items).update_quality()
+
+        expect(@items[0].quality).to be <= 50
+      end
+
       context "when sell by date has passed" do
         it "quality decreases twice as fast" do
           items = [Item.new(a_name, 0, 20)]
